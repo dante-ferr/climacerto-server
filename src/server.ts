@@ -3,16 +3,19 @@ import Fastify from 'fastify'
 import { analyzeContainer } from './modules/analyze/assets/analyze-container.js'
 import { registerControllers } from './modules/shared/decorators/routes.js'
 import { errorHandler } from './modules/shared/middlewares/error-middleware.js'
+import cors from "@fastify/cors";
 
-const app = Fastify()
+const app = Fastify({ logger: true });
 
-app.setErrorHandler(errorHandler)
-registerControllers(app, 'api', analyzeContainer)
+await app.register(cors);
 
-app.listen({ port: 3000 }, (err, address) => {
+app.setErrorHandler(errorHandler);
+registerControllers(app, "api", analyzeContainer);
+
+app.listen({ port: 3333 }, (err, address) => {
   if (err) {
-    console.error(err)
-    process.exit(1)
+    console.error(err);
+    process.exit(1);
   }
-  console.log(`Server running at ${address}`)
-})
+  console.log(`Server running at ${address}`);
+});
