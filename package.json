@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && node dist/server.js",
     "build": "npm run clean && tsc",
-    "dev": "tsx watch --env-file=.env src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "clean": "node scripts/clean.js",
     "test": "vitest",
     "lint": "npx eslint ."
@@ -48,5 +48,10 @@
       ],
       "@semantic-release/github"
     ]
+  },
+  "dependencies": {
+    "fastify": "^5.6.1",
+    "inversify": "^7.10.2",
+    "reflect-metadata": "^0.2.2"
   }
 }
