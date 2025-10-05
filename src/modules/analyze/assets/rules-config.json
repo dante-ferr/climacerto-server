@@ -1,0 +1,36 @@
+{
+  "activityRules": {
+    "praia": [
+      { "condition": { "fact": "condition", "operator": "equals", "value": "Clear" }, "points": 30, "message": "Dia ensolarado, perfeito para praia!" },
+      { "condition": { "fact": "condition", "operator": "equals", "value": "Rain" }, "points": -30, "message": "Chuva não é ideal para praia." },
+      { "condition": { "fact": "temperature", "operator": "between", "value": [25, 32] }, "points": 20, "message": "Temperatura excelente para o mar." },
+      { "condition": { "fact": "temperature", "operator": "outside", "value": [20, 35] }, "points": -20, "message": "Temperatura não está ideal para praia." },
+      { "condition": { "fact": "uv", "operator": "greaterThan", "value": 8 }, "points": 0, "message": "Índice UV muito alto, use protetor solar." }
+    ],
+    "trilha": [
+      { "condition": { "fact": "condition", "operator": "in", "value": ["Cloudy", "Clear"] }, "points": 30, "message": "Tempo ótimo para trilha." },
+      { "condition": { "fact": "temperature", "operator": "between", "value": [15, 25] }, "points": 20, "message": "Temperatura ideal para atividade física." },
+      { "condition": { "fact": "condition", "operator": "equals", "value": "Rain" }, "points": -25, "message": "Chuva pode deixar o terreno escorregadio." },
+      { "condition": { "fact": "temperature", "operator": "greaterThan", "value": 32 }, "points": -10, "message": "Muito calor para trilha longa." }
+    ],
+    "piquenique": [
+      { "condition": { "fact": "condition", "operator": "in", "value": ["Clear", "Cloudy"] }, "points": 30, "message": "Clima perfeito para piquenique!" },
+      { "condition": { "fact": "temperature", "operator": "between", "value": [20, 28] }, "points": 20, "message": "Temperatura muito agradável." },
+      { "condition": { "fact": "condition", "operator": "equals", "value": "Rain" }, "points": -40, "message": "Chuva estraga o piquenique." },
+      { "condition": { "fact": "temperature", "operator": "outside", "value": [20, 28] }, "points": -10, "message": "Temperatura não está ideal." }
+    ]
+  },
+  "analysisMap": {
+    "8": { "color": "green", "qualitative": "Excelente" },
+    "6": { "color": "lightgreen", "qualitative": "Bom" },
+    "4": { "color": "yellow", "qualitative": "Razoável" },
+    "2": { "color": "orange", "qualitative": "Ruim" },
+    "1": { "color": "red", "qualitative": "Desfavorável" }
+  },
+  "trendAlertRules": [
+    { "condition": { "fact": "uv", "operator": "greaterThan", "value": 8 }, "message": "Atenção: alto índice UV!" },
+    { "condition": { "fact": "wind", "operator": "greaterThan", "value": 40 }, "message": "Ventos fortes previstos." },
+    { "condition": { "fact": "temperature", "operator": "greaterThan", "value": 38 }, "message": "Alerta: calor extremo!" },
+    { "condition": { "fact": "temperature", "operator": "lessThan", "value": 5 }, "message": "Alerta: frio intenso!" }
+  ]
+}
