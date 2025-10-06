@@ -1,6 +1,7 @@
 import dns from 'dns'
 import 'reflect-metadata'
 import Fastify from 'fastify'
+import type { FastifyInstance } from 'fastify'
 import { analyzeContainer } from './modules/analyze/assets/analyze-container.js'
 import { registerControllers } from './modules/shared/decorators/routes.js'
 import { errorHandler } from './modules/shared/middlewares/error-middleware.js'
@@ -10,24 +11,29 @@ import rateLimit from "@fastify/rate-limit"
 
 dns.setDefaultResultOrder('ipv4first')
 
-const app = Fastify({ logger: true })
+async function buildApp() {
+  const app = Fastify({ logger: true })
 
-await app.register(helmet)
+  await app.register(helmet)
+  await app.register(cors)
+  await app.register(rateLimit, {
+    max: 100,
+    timeWindow: "1 minute",
+  })
 
-await app.register(cors)
+  app.setErrorHandler(errorHandler)
+  registerControllers(app, "api", analyzeContainer)
 
-await app.register(rateLimit, {
-  max: 100,
-  timeWindow: "1 minute",
-})
+  return app
+}
 
-app.setErrorHandler(errorHandler)
-registerControllers(app, "api", analyzeContainer)
+let cachedApp: FastifyInstance
 
-app.listen({ port: 3333 }, (err, address) => {
-  if (err) {
-    console.error(err)
-    process.exit(1)
+export default async function handler(req: any, res: any) {
+  if (!cachedApp) {
+    cachedApp = await buildApp()
+    await cachedApp.ready()
   }
-  console.log(`Server running at ${address}`)
-})
+
+  cachedApp.server.emit('request', req, res)
+}
