@@ -24,8 +24,8 @@ async function buildApp() {
   app.addHook('preHandler', (request, reply, done) => {
     // Defina as origens permitidas
     const allowedOrigins = [
-      "https://climacerto.onrender.com/",
-      "https://climacerto-server-no3v5q7wc-therodrig0s-projects.vercel.app/"
+      "https://climacerto.onrender.com",
+      "https://climacerto-server-no3v5q7wc-therodrig0s-projects.vercel.app",
     ];
     const origin = request.headers.origin;
 

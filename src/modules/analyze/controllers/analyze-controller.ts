@@ -16,6 +16,7 @@ export class AnalyzeController {
 
     @Get("/name")
     async analyzeByName(@Query() data: AnalyzeNameDto) {
+        console.log(data);
         return await this.analyzeService.getAnalysisByName(data)
     }
 }
