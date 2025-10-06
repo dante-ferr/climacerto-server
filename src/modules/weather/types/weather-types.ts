@@ -6,6 +6,8 @@ export interface ClimateData {
   wind: number // m/s
   uv: number // índice UV
   condition: WeatherCondition
+  precipitation: any
+
 }
 
 export interface IdealConditions {
@@ -17,6 +19,6 @@ export interface IdealConditions {
 }
 
 export interface IWeatherService {
-  getWeatherByCoords(lat: string, lon: string, date: string): Promise<ClimateData>
+  getWeatherByCoords(latitude: string, longitude: string, date: string): Promise<ClimateData>
   getWeatherByName(name: string, date: string): Promise<ClimateData>
 }

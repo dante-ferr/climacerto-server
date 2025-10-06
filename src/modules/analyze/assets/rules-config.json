@@ -1,5 +1,37 @@
 {
   "activityRules": {
+    "default": [
+      {
+        "condition": {
+          "fact": "temperature",
+          "operator": "between",
+          "value": [
+            18,
+            26
+          ]
+        },
+        "points": 15,
+        "message": "Pleasant temperature for general activities."
+      },
+      {
+        "condition": {
+          "fact": "condition",
+          "operator": "equals",
+          "value": "Rain"
+        },
+        "points": -20,
+        "message": "Rain can disrupt outdoor activities."
+      },
+      {
+        "condition": {
+          "fact": "wind",
+          "operator": "greaterThan",
+          "value": 30
+        },
+        "points": -10,
+        "message": "Strong wind can be a nuisance."
+      }
+    ],
     "praia": [
       {
         "condition": {
@@ -23,7 +55,10 @@
         "condition": {
           "fact": "temperature",
           "operator": "between",
-          "value": [25, 32]
+          "value": [
+            25,
+            32
+          ]
         },
         "points": 20,
         "message": "Excellent temperature for the sea."
@@ -32,13 +67,20 @@
         "condition": {
           "fact": "temperature",
           "operator": "outside",
-          "value": [20, 35]
+          "value": [
+            20,
+            35
+          ]
         },
         "points": -20,
         "message": "Temperature is not ideal for the beach."
       },
       {
-        "condition": { "fact": "uv", "operator": "greaterThan", "value": 8 },
+        "condition": {
+          "fact": "uv",
+          "operator": "greaterThan",
+          "value": 8
+        },
         "points": 0,
         "message": "Very high UV index, use sunscreen."
       }
@@ -48,7 +90,10 @@
         "condition": {
           "fact": "condition",
           "operator": "in",
-          "value": ["Cloudy", "Clear"]
+          "value": [
+            "Cloudy",
+            "Clear"
+          ]
         },
         "points": 30,
         "message": "Great weather for a hike."
@@ -57,7 +102,10 @@
         "condition": {
           "fact": "temperature",
           "operator": "between",
-          "value": [15, 25]
+          "value": [
+            15,
+            25
+          ]
         },
         "points": 20,
         "message": "Ideal temperature for physical activity."
@@ -86,7 +134,10 @@
         "condition": {
           "fact": "condition",
           "operator": "in",
-          "value": ["Clear", "Cloudy"]
+          "value": [
+            "Clear",
+            "Cloudy"
+          ]
         },
         "points": 30,
         "message": "Perfect weather for a picnic!"
@@ -95,7 +146,10 @@
         "condition": {
           "fact": "temperature",
           "operator": "between",
-          "value": [20, 28]
+          "value": [
+            20,
+            28
+          ]
         },
         "points": 20,
         "message": "Very pleasant temperature."
@@ -113,7 +167,10 @@
         "condition": {
           "fact": "temperature",
           "operator": "outside",
-          "value": [20, 28]
+          "value": [
+            20,
+            28
+          ]
         },
         "points": -10,
         "message": "Temperature is not ideal."
@@ -121,19 +178,42 @@
     ]
   },
   "analysisMap": {
-    "8": { "color": "green", "qualitative": "Excellent" },
-    "6": { "color": "lightgreen", "qualitative": "Good" },
-    "4": { "color": "yellow", "qualitative": "Acceptable" },
-    "2": { "color": "orange", "qualitative": "Bad" },
-    "1": { "color": "red", "qualitative": "Horrible" }
+    "8": {
+      "color": "green",
+      "qualitative": "Excellent"
+    },
+    "6": {
+      "color": "lightgreen",
+      "qualitative": "Good"
+    },
+    "4": {
+      "color": "yellow",
+      "qualitative": "Acceptable"
+    },
+    "2": {
+      "color": "orange",
+      "qualitative": "Bad"
+    },
+    "1": {
+      "color": "red",
+      "qualitative": "Horrible"
+    }
   },
   "trendAlertRules": [
     {
-      "condition": { "fact": "uv", "operator": "greaterThan", "value": 8 },
+      "condition": {
+        "fact": "uv",
+        "operator": "greaterThan",
+        "value": 8
+      },
       "message": "Attention: high UV index!"
     },
     {
-      "condition": { "fact": "wind", "operator": "greaterThan", "value": 40 },
+      "condition": {
+        "fact": "wind",
+        "operator": "greaterThan",
+        "value": 40
+      },
       "message": "Strong winds forecasted."
     },
     {

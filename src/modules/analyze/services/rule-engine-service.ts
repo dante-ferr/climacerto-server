@@ -19,8 +19,10 @@ export class RuleEngineService {
         let score = INITIAL_SCORE
         const pros: string[] = []
         const cons: string[] = []
-        
-        const rules = (this.config.activityRules || {})[activity] || []
+
+        const activityRules = this.config.activityRules || {}
+
+        const rules = activityRules[activity] || activityRules['default'] || []
 
         for (const rule of rules) {
             const condition = rule.condition
@@ -28,16 +30,20 @@ export class RuleEngineService {
                 score += rule.points
                 const targetArray = rule.points > 0 ? pros : cons
                 targetArray.push(rule.message)
-            } 
+            }
+        }
+
+        if (pros.length === 0 && cons.length === 0) {
+            cons.push("The weather conditions are neutral or insufficient for a detailed analysis of this activity.")
         }
 
         score = Math.min(Math.max(score, 0), 100)
+
         return { score, pros, cons }
     }
-
     private getAnalysisResult(score: number): IAnalysisResult {
         const scoreGroup = Math.floor(score / 10)
-        
+
         const analysisMap = this.config.analysisMap || {}
         const thresholds = Object.keys(analysisMap).map(Number).sort((a, b) => b - a)
 
@@ -49,7 +55,7 @@ export class RuleEngineService {
                 }
             }
         }
-        
+
         return analysisMap['1'] || { color: 'gray', qualitative: 'Indeterminado' }
     }
 
@@ -61,7 +67,7 @@ export class RuleEngineService {
                 return rule.message
             }
         }
-        
+
         return undefined
     }
 
