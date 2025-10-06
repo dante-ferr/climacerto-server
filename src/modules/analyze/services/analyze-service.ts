@@ -14,10 +14,10 @@ export class AnalyzeService implements IAnalyzeService {
 
     async getAnalysisByCoords(dto: AnalyzeCoordsDto): Promise<IAnalysisResponse> {
       if (!dto.activityId) {
-        throw new BadRequestError("O parâmetro 'activityId' é obrigatório.");
+        throw new BadRequestError("The 'activityId' parameter is required.");
       }
       if (!dto.date) {
-        throw new BadRequestError("O parâmetro 'date' é obrigatório.");
+        throw new BadRequestError("The 'date' parameter is required.");
       }
       const climateData = await this.weatherService.getWeatherByCoords(
         dto.latitude,
@@ -31,10 +31,10 @@ export class AnalyzeService implements IAnalyzeService {
     }
     async getAnalysisByName(dto: AnalyzeNameDto): Promise<IAnalysisResponse> {
         if (!dto.activityId) {
-          throw new BadRequestError("O parâmetro 'activityId' é obrigatório.");
+          throw new BadRequestError("The 'activityId' parameter is required.");
         }
         if (!dto.date) {
-          throw new BadRequestError("O parâmetro 'date' é obrigatório.");
+          throw new BadRequestError("The 'date' parameter is required.");
         }
         const climateData = await this.weatherService.getWeatherByName(dto.name, dto.date)
 

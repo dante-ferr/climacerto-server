@@ -18,12 +18,12 @@ export class WeatherService implements IWeatherService {
     date: string
   ): Promise<ClimateData> {
     if (!date) {
-      throw new BadRequestError("O parâmetro 'date' é obrigatório.");
+      throw new BadRequestError("The 'date' parameter is required.");
     }
 
     if (!latitude || !longitude) {
       throw new BadRequestError(
-        "Os parâmetros 'longitude' e 'latitude' são obrigatórios."
+        "The 'longitude' and 'latitude' parameters are required."
       );
     }
 
@@ -50,7 +50,7 @@ export class WeatherService implements IWeatherService {
 
     if (!response.ok) {
       throw new ServiceUnavailableError(
-        "Não foi possível obter os dados climáticos no momento."
+        "Could not get climate data at the moment."
       );
     }
 
@@ -61,7 +61,9 @@ export class WeatherService implements IWeatherService {
       !daily.temperature_2m_max ||
       daily.temperature_2m_max.length === 0
     ) {
-      throw new InternalServerError("Resposta inesperada da API de clima.");
+      throw new InternalServerError(
+        "Unexpected response from the weather API."
+      );
     }
 
     return {
@@ -83,21 +85,21 @@ export class WeatherService implements IWeatherService {
 
     const response = await fetch(`${this.geocodeUrl}?${query}`, {
       headers: {
-        "Accept-Language": "pt-BR,pt;q=0.9",
-        "User-Agent": "ClimaCertoApp/1.0 (seu.email.de.contato@exemplo.com)",
+        "Accept-Language": "en-US,en;q=0.9",
+        "User-Agent": "ClimaCertoApp/1.0 (your.contact.email@example.com)",
       },
     });
 
     if (!response.ok) {
       throw new ServiceUnavailableError(
-        "Não foi possível obter os dados de geolocalização no momento."
+        "Could not get geolocation data at the moment."
       );
     }
 
     const results = await response.json();
 
     if (!results || results.length === 0) {
-      throw new NotFoundError(`Local não encontrado: ${name}`);
+      throw new NotFoundError(`Location not found: ${name}`);
     }
 
     const { lat, lon } = results[0];
