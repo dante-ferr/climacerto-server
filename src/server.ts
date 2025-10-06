@@ -14,10 +14,12 @@ dns.setDefaultResultOrder('ipv4first')
 async function buildApp() {
   const app = Fastify({ logger: true })
 
-  await app.register(helmet)
   await app.register(cors, {
-    origin: "https://climacerto.onrender.com/"
+    origin: "https://climacerto.onrender.com"
   })
+
+  await app.register(helmet)
+
   await app.register(rateLimit, {
     max: 100,
     timeWindow: "1 minute",
