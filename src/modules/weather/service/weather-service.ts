@@ -45,13 +45,26 @@ export class WeatherService implements IWeatherService {
     }
 
     async getWeatherByName(name: string, date: string): Promise<ClimateData> {
-        const query = new URLSearchParams({ format: "json", q: name, limit: "1" })
+        const query = new URLSearchParams({
+            format: "json",
+            q: name,
+            limit: "1",
+        })
+
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 5000)
+
         const response = await fetch(`${this.geocodeUrl}?${query}`, {
             headers: {
                 "Accept-Language": "en-US,en;q=0.9",
-                "User-Agent": "ClimaCertoApp/1.0 (your.contact.email@example.com)",
+                "User-Agent": "ClimaCertoApp/1.0 (rodrigogeronimo11@gmail.vom)",
             },
+            signal: controller.signal,
+        }).catch(() => {
+            throw new ServiceUnavailableError("Geocoding service is unreachable.")
         })
+
+        clearTimeout(timeout)
 
         if (!response.ok) {
             throw new ServiceUnavailableError("Could not get geolocation data at the moment.")
@@ -62,9 +75,12 @@ export class WeatherService implements IWeatherService {
             throw new NotFoundError(`Location not found: ${name}`)
         }
 
-        const { lat, lon } = results[0]
+        const lat = parseFloat(results[0].lat).toFixed(4)
+        const lon = parseFloat(results[0].lon).toFixed(4)
+
         return this.getWeatherByCoords(lat, lon, date)
     }
+
 
     private async getWeatherFromNasa(lat: string, lon: string, date: string): Promise<ClimateData> {
         const [rawDate] = date.split("T")
